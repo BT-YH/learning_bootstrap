@@ -146,6 +146,16 @@
       .container-padding {
         padding: 0 3% 3% 3%;
       }
+
+      a {
+        text-decoration: none;
+        text-align: left; /* Center-align text inside the nav-item */
+        color: var(--theme-color); /* White text */
+        display: block; /* Makes the <a> take up full width and height */
+        height: 100% !important; /* Ensure it spans the height of the parent */
+        border-radius: 5px;
+        font-size: 1rem;
+      }
     </style>
   </head>
 
@@ -442,14 +452,15 @@
       <div class="container">
         <div class="row">
           <h2 class="serif">Barry Tang</h2>
+          <br />
         </div>
         <div style="display: flex; justify-content: space-around">
-          <div class="col-sm-5">
+          <div class="container">
             <img
               src="./me.png"
               style="width: 90%; padding: 5%; border-radius: 15%" />
           </div>
-          <div class="col-sm-3">
+          <div class="container">
             <h5>Personal</h5>
             <p>
               <a href="https://github.com/BT-YH" target="_blank"
@@ -471,7 +482,7 @@
               >
             </p>
           </div>
-          <div class="col-sm-4">
+          <div class="container">
             <h5>Contact</h5>
             <p>
               <a href="mailto:tangyi02@gettysburg.edu"
