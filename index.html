@@ -4,17 +4,503 @@
     <title>Welcom to Barry Tang</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <script src="./js/color-mode.js"></script>
+    <script src="./js/script.js"></script>
     <!-- Bootstrap -->
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous" />
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <script
       src="https://kit.fontawesome.com/c13a8d5cc1.js"
       crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
-    <meta name="theme-color" content="#12B810" />
+
+    <!-- Prevent caching -->
+    <meta
+      http-equiv="cache-control"
+      content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+
+    <!-- Fonts for switcher -->
+    <!-- Serif -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Arvo|Bitter|Bree+Serif|Crete+Round|Crimson+Text|Domine|EB+Garamond|Grenze|Libre+Baskerville|Libre+Caslon+Display|Libre+Caslon+Text|Lora|Merriweather|Noto+Serif|PT+Serif|Playfair+Display|Roboto+Slab|Slabo+27px|Source+Serif+Pro|Vollkorn&display=swap"
+      rel="stylesheet" />
+    <!-- Display -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Abril+Fatface|Alfa+Slab+One|Baloo+Bhaina|Bangers|Bowlby+One+SC|Bungee|Cabin+Sketch|Emilys+Candy|Faster+One|Lobster|Monoton|Mountains+of+Christmas|Nixie+One|Press+Start+2P|Righteous|Rye|Saira+Stencil+One|Shojumaru|Special+Elite|Titan+One&display=swap"
+      rel="stylesheet" />
+    <!-- Sans-serif -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Blinker|Lato|Lexend+Exa|Montserrat|Muli|Noto+Sans|Nunito|Open+Sans|Open+Sans+Condensed:300|Oswald|PT+Sans|Poppins|Raleway|Red+Hat+Display|Red+Hat+Text|Roboto|Roboto+Condensed|Source+Sans+Pro|Titillium+Web|Ubuntu&display=swap"
+      rel="stylesheet" />
+
+    <style>
+      :root {
+        --theme-color: rgb(67, 166, 205);
+        --opposite-color: rgb(67, 166, 205);
+      }
+
+      body {
+        min-width: 300px !important;
+      }
+
+      .btn-bd-primary {
+        --bd-blue-bg: var(--theme-color);
+        --bd-blue-rgb: 112.520718, 200.062154, 249.437846;
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-blue-bg);
+        --bs-btn-border-color: var(--bd-blue-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: rgb(90, 196, 227);
+        --bs-btn-hover-border-color: rgb(57, 129, 140);
+        --bs-btn-focus-shadow-rgb: var(--bd-blue-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: rgb(70, 196, 227);
+        --bs-btn-active-border-color: #23b5c8;
+      }
+
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
+
+      .bd-mode-toggle .dropdown-menu .active .bi {
+        display: block !important;
+      }
+
+      code {
+        color: var(--opposite-color);
+      }
+
+      p {
+        font-size: large;
+      }
+      .ani {
+        background-color: black;
+        color: grey;
+        padding: 10px;
+        display: block;
+        outline: 0px !important;
+        margin-bottom: 0;
+        border-radius: 0;
+        box-sizing: border-box;
+        border-width: 2px;
+        border-color: black;
+      }
+      .ani :hover {
+        color: lightgrey;
+        border-width: 2px;
+        border-color: black;
+      }
+
+      #ani-group {
+        position: absolute;
+        z-index: 100;
+        transform: translate(-70px, 0px);
+        transition: ease 2s;
+        transition-delay: 3s;
+      }
+
+      #ani-group:hover {
+        transform: translate(0px, 0px);
+        transition: 1s;
+      }
+
+      .navbar {
+        display: flex;
+        /* justify-content: space-around; Space divisions evenly */
+        align-items: center;
+        background-color: #333; /* Dark background */
+        border-radius: 0;
+        height: 3.2rem;
+      }
+
+      .nav-item {
+        flex: 1; /* Allows even spacing across all nav items*/
+        text-align: center; /* Center-align text inside the nav-item */
+        height: 100%;
+      }
+
+      .nav-item a {
+        text-decoration: none;
+        text-align: center; /* Center-align text inside the nav-item */
+        color: white; /* White text */
+        display: block; /* Makes the <a> take up full width and height */
+        height: 100% !important; /* Ensure it spans the height of the parent */
+        border-radius: 5px;
+        font-size: 1.3rem;
+        transition: background-color 0.5s ease;
+      }
+
+      .nav-item a:hover {
+        background-color: var(--theme-color); /* Highlight on hover */
+        border-radius: 5px;
+      }
+
+      .container-padding {
+        padding: 0 3% 3% 3%;
+      }
+    </style>
   </head>
+
+  <body>
+    <!-- Getting SVG for theme icons -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+      <symbol id="check2" viewBox="0 0 16 16">
+        <path
+          d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+      </symbol>
+      <symbol id="circle-half" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+      </symbol>
+      <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+        <path
+          d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+        <path
+          d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+      </symbol>
+      <symbol id="sun-fill" viewBox="0 0 16 16">
+        <path
+          d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+      </symbol>
+    </svg>
+
+    <!-- Theme-change button -->
+    <div
+      class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+      <button
+        class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        aria-label="Toggle theme (auto)">
+        <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
+          <use href="#circle-half"></use>
+        </svg>
+        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+      </button>
+      <ul
+        class="dropdown-menu dropdown-menu-end shadow"
+        aria-labelledby="bd-theme-text">
+        <li>
+          <button
+            type="button"
+            class="dropdown-item d-flex align-items-center"
+            data-bs-theme-value="light"
+            aria-pressed="false">
+            <svg class="bi me-2 opacity-50" width="1em" height="1em">
+              <use href="#sun-fill"></use>
+            </svg>
+            Light
+            <svg class="bi ms-auto d-none" width="1em" height="1em">
+              <use href="#check2"></use>
+            </svg>
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="dropdown-item d-flex align-items-center"
+            data-bs-theme-value="dark"
+            aria-pressed="false">
+            <svg class="bi me-2 opacity-50" width="1em" height="1em">
+              <use href="#moon-stars-fill"></use>
+            </svg>
+            Dark
+            <svg class="bi ms-auto d-none" width="1em" height="1em">
+              <use href="#check2"></use>
+            </svg>
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="dropdown-item d-flex align-items-center active"
+            data-bs-theme-value="auto"
+            aria-pressed="true">
+            <svg class="bi me-2 opacity-50" width="1em" height="1em">
+              <use href="#circle-half"></use>
+            </svg>
+            Auto
+            <svg class="bi ms-auto d-none" width="1em" height="1em">
+              <use href="#check2"></use>
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Floating buttons -->
+    <div
+      id="ani-group"
+      class="btn-group"
+      role="group"
+      onclick="stopclick(event);">
+      <button class="btn ani" onclick="changeColor()">
+        <i class="fas fa-paint-brush"></i>
+      </button>
+      <button class="btn ani" onclick="changeFont()">
+        <i class="fas fa-font"></i>
+      </button>
+      <button class="btn ani">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Header -->
+    <div id="colorChanging" class="p-5 text-center bg-body-tertiary">
+      <div class="container py-5 bg-transparent">
+        <p class="display-1 text-body-emphasis">
+          <span
+            style="font-size: inherit; font-weight: inherit; font-style: italic"
+            >Welcome to</span
+          >
+          <span
+            class="textColorChanging"
+            id="display"
+            style="font-size: inherit; font-weight: bolder"
+            >Barry Tang</span
+          ><span
+            style="font-size: inherit; font-weight: inherit; font-style: italic"
+            >.</span
+          >
+        </p>
+        <p class="col-lg-8 mx-auto lead">
+          My <em>online</em> home/blog/<i id="colorChanging-code"
+            ><code>codebase</code></i
+          >.
+        </p>
+      </div>
+    </div>
+
+    <!-- Nav Bar -->
+    <nav class="navbar sans-serif">
+      <div class="nav-item">
+        <a href="#about" onclick="change_page('about')">About</a>
+      </div>
+      <div class="nav-item">
+        <a href="#projects" onclick="change_page('projects')">Projects</a>
+      </div>
+      <div class="nav-item">
+        <a href="#writing" onclick="change_page('writing')">Writing</a>
+      </div>
+      <div class="nav-item">
+        <a href="#other" onclick="change_page('other')">Other</a>
+      </div>
+    </nav>
+
+    <!-- About -->
+
+    <div
+      id="cont-about"
+      class="container"
+      style="
+        display: flex;
+        box-sizing: border-box;
+        align-content: center;
+        padding: 3rem;
+      ">
+      <div class="row" style="padding: 0; margin: 0">
+        <div class="col-md-2" style="height: 10px"></div>
+        <div class="col-md-8" align="justify">
+          <div
+            class="text-body-emphasis"
+            style="
+              box-sizing: border-box;
+              box-shadow: 5px 10px 18px #888888;
+              padding: 2rem;
+            ">
+            <h4 class="mx-auto">Hello there! :)</h4>
+            <br /><br />
+            <p class="mx-auto lead">
+              I am an avid learner in the fields of physics and computer
+              science. I have research experience in deep learning and computer
+              vision, and I am equipped with physics lab techniques. On the
+              other hand, I love teaching people about physics and computer
+              science.
+            </p>
+            <p class="mx-auto lead">
+              I have worked as a teaching assistant for physics, CS, and data
+              science classes. I am interested in the intersection of the two
+              fields, ie. applying machine learning models to analyze
+              experimental data, quantum AI and ML, and developing software
+              tools for physics simulation.
+            </p>
+            <p class="mx-auto lead">
+              As you might have guessed, I am a physics and CS geek, a problem
+              solver, and a huge collaborator. <br />
+              <br />
+              If you are interested in working together, please contact me!
+            </p>
+            <canvas
+              id="signature"
+              width="1000"
+              height="500"
+              style="height: 10em"></canvas>
+          </div>
+          <br />
+        </div>
+        <div class="col-md-2" style="height: 10px"></div>
+      </div>
+    </div>
+
+    <div
+      id="cont-projects"
+      class="container container-padding"
+      style="
+        display: none;
+        flex-direction: column;
+        justify-content: flex-start;
+        min-height: 200px;
+      ">
+      <h2 class="serif" style="text-align: center">Projects</h2>
+      <br />
+
+      <h3 class="serif">Developments</h3>
+      <br />
+      <ul>
+        <li>
+          <a
+            href="http://cs.gettysburg.edu/~tangyi02/Projects/collegeMarketplace/">
+            Online college market place</a
+          >
+          (Prototype). Frontend is developed using <b>HTML</b>, <u>CSS</u>, and
+          <em>Javascript</em>. Backend uses <code>PHP</code>. <br /><br />
+          <small
+            >A group project for my CS360 database class taken at Gettysburg
+            College. I hate to admit it, but my group (three people) really
+            procrastinated and this whole site is put together within 48
+            hours... &nbsp;&nbsp;&nbsp;&nbsp;I will update and improve this
+            website when I get a chance.
+          </small>
+        </li>
+      </ul>
+
+      <br />
+
+      <h3 class="serif">Games</h3>
+      <br />
+      <ul>
+        <li>
+          <a href="./snake/"> Snake</a>: A classic snake game with subtle
+          tweaks. Developed using plain <b>HTML</b>, <u>CSS</u>, and
+          <em>Javascript</em>.
+        </li>
+        <br />
+        <li>
+          <a href=""> Traffic Lights</a>: Got bored of tik-tak-toe? Try this!
+        </li>
+      </ul>
+    </div>
+
+    <div
+      id="cont-writing"
+      class="container container-padding"
+      style="display: none; justify-content: center; align-items: center">
+      <h4 class="serif">In Progress..</h4>
+    </div>
+
+    <div
+      id="cont-other"
+      class="container container-padding"
+      style="display: none; justify-content: center; align-items: center">
+      <h4 class="serif">In Progress..</h4>
+      <br />
+      <div
+        id="canvas-container"
+        style="width: 803px; height: 403px; border: 1px solid black">
+        <!-- The canvas will be dynamically placed here -->
+      </div>
+    </div>
+
+    <div
+      class="container-fluid"
+      style="
+        display: flex;
+        background-color: black;
+        margin-top: 2rem;
+        padding: 4rem;
+        justify-content: center;
+      ">
+      <h1 class="serif" style="color: lightgrey">Stay Curious.</h1>
+    </div>
+
+    <footer
+      class="container-fluid"
+      style="
+        background-color: white;
+        box-shadow: 0px 40px 40px -20px grey inset;
+        padding-top: 3rem;
+      ">
+      <div class="container">
+        <div class="row">
+          <h2 class="serif">Barry Tang</h2>
+        </div>
+        <div style="display: flex; justify-content: space-around">
+          <div class="col-sm-5">
+            <img
+              src="./me.png"
+              style="width: 90%; padding: 5%; border-radius: 15%" />
+          </div>
+          <div class="col-sm-3">
+            <h5>Personal</h5>
+            <p>
+              <a href="https://github.com/BT-YH" target="_blank"
+                ><i class="fab fa-github"></i> BT-YH</a
+              >
+            </p>
+            <p>
+              <a
+                href="https://www.linkedin.com/in/yihui-tang-875086255/"
+                target="_blank"
+                ><i class="far fa-address-card"></i> LinkedIN</a
+              >
+            </p>
+            <p>
+              <a
+                href="https://www.youtube.com/channel/UCLoKghQ29FvlJ5piojqa9yg"
+                target="_blank"
+                ><i class="fab fa-youtube"></i> Barry</a
+              >
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <h5>Contact</h5>
+            <p>
+              <a href="mailto:tangyi02@gettysburg.edu"
+                ><i class="far fa-envelope"></i> tangyi02@gettysburg.edu</a
+              >
+            </p>
+            <p>
+              Yihui "Barry" Tang<br />
+              Department of Physics, Computer Science<br />
+              Gettysburg College<br />
+              Gettysburg, PA 17325
+            </p>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 50px">
+          <div class="col-xs-12">
+            <p class="text-center" style="font-size: 10pt">
+              Copyright &copy; Barry Tang 2024. Inspired by Peter E. Francis
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="./js/signature-code.js"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+  </body>
 </html>
